@@ -21,19 +21,18 @@ public class FileSystemClassLoader extends ClassLoader{
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         // TODO Auto-generated method stub
         Class<?> c = findLoadedClass(name);//查询类是否已经加载
-        if (c != null) {
-            return c;
-        } else {
+        if (c == null) {
             ClassLoader parent = this.getParent();//调用父类加载器
             try {
-                c = parent.loadClass(name);//查询上一层类加载器是否存在该类
+                System.out.println("parent:"+parent.getClass());
+                //查询上一层(extClassLoader)类加载器是否存在该类,loadClass方法源码中也有去调findBootstrapClassOrNull方法,所以这里无需调用;即使你想调用findBootstrapClassOrNull方法,那也是不可能的,因为该方法是private;
+                //如果自定义加载器想要绕开委托这种机制,直接将下面这行代码注释掉,步骤（1）继承ClassLoader （2）重写findClass（）方法   （3）调用defineClass（）方法
+                c = parent.loadClass(name);
             }catch (Exception e) {
                
             }
             
-            if (c != null) {
-                return c;
-            } else {
+            if (c == null) {
                 byte[] classData = getClassData(name);//加载本地类文件
                 if (classData == null) {
                     throw new ClassNotFoundException();//不存在抛异常
@@ -47,7 +46,6 @@ public class FileSystemClassLoader extends ClassLoader{
 
     private byte[] getClassData(String name) {
         String path = rootDir + "/" + name.replace('.', '/') + ".class";
-
         //将class文件转换成字节数组
         InputStream is = null;
         ByteArrayOutputStream bs = new ByteArrayOutputStream();
