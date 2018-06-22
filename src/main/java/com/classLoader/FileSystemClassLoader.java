@@ -64,17 +64,13 @@ public class FileSystemClassLoader extends ClassLoader{
                 if (is != null) {
                     is.close();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            
-            try {
                 if (bs != null) {
                     bs.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
+           
         }
 
         return null;
