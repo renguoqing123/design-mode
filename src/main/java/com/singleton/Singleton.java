@@ -9,10 +9,10 @@ public class Singleton {
     
     private Singleton() {}
     
-    public static Singleton getInstance(){
-        if(singleton == null) {
+    public static Singleton getInstance() {
+        if (singleton == null) {
             synchronized (singleton) {
-                if(singleton == null) {
+                if (singleton == null) {
                     singleton = new Singleton();
                 }
             }
