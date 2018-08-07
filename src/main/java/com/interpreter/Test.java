@@ -5,9 +5,9 @@ package com.interpreter;
  */
 public class Test {
     public static void main(String[] args) {
-        // 计算9*2/1-2的值
+        // 计算9*2/3-2的值
         int result = new Minus().interpret(new Context(new Divide().interpret(new Context(new Plus()  
-                .interpret(new Context(9, 2)), 1)),2));  
+                .interpret(new Context(9, 2)), 3)),2));  
         System.out.println(result);
     }
 }
